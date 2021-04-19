@@ -1,5 +1,5 @@
 class Video:
-
+    
     def __init__(self, id: int, titulo: str, descricao:str, imagem_path: str, video_path: str):
         self.__id = id
         self.__titulo = titulo

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebTheater</title>
+        <meta charset="utf-8" />
+        <link href="{{url_for('static', filename='css/home.css')}}" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Mais curtidos</h1>
+        {% for categoria in categoria_list: %}
+        <section>
+            <h2>{{categoria.get_nome()}}</h2>
+            {% for video in categoria.get_video_list(): %}
+            <section>
+                <h3>{{video.get_titulo()}}</h3>
+                <img class="video-banner" src="{{url_for('static', filename=video.get_imagem_path())}}" />
+            </section>
+            {% endfor %}
+        </section>
+        {% endfor %}
+    </body>
+</html>
