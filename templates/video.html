@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Perfil Vídeo</title>
+        <meta charset="utf-8" />
+        <link href="{{url_for('static', filename='css/video.css')}}" rel="stylesheet" />
+    </head>
+    <body>
+        {% if video: %}
+            <img src="{{url_for('static', filename=video.get_imagem_path())}}" />
+            <h1>{{video.get_titulo()}}</h1>
+            <p>{{video.get_descricao()}}</p>
+            <video id="video-estilo" controls>
+                <source src="{{url_for('static', filename=video.get_video_path())}}" type="{{video.get_mime()}}">
+                Seu navegador não suporta a exibição desse vídeo.
+            </video>
+        {% else: %}
+            <h1>Ops! Vídeo não encontrado</h1>
+            <img src="{{url_for('static', filename='img/404-error.png')}}" />
+        {% endif %}
+    </body>
+</html>
