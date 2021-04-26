@@ -1,28 +1,18 @@
 from flask import Flask, render_template
-from video import Video
-from categoria import Categoria
+from application.model.entity.video import Video
+from application.model.entity.categoria import Categoria
+from application.model.dao.categoria_dao import CategoriaDAO
+import os
 
-app = Flask(__name__)
-
-video_streetfighter = Video(1, 'Street Fighter', 'Vídeo do Street Fighter', 'img/stf1.jpg', 'video/stf1.mp4', 'video/mp4')
-video_naturo = Video(2, 'Naturo', 'Vídeo de Naruto', 'img/shonen1.jpg', 'video/shonen1.webm', 'video/webm')
-video_desaf_gigantes = Video(3, 'Desafiando Gigantes', 'Vídeo Desafiando Gigantes', 'img/capa_desafiandogigantes.png', 'video/desafiando-gigantes.mp4', 'video/mp4')
-video_mr_sunshine = Video(4, 'Mr. Sunshine', 'Vídeo Mr. Sunshine', 'img/capa_mrsunshine.png', 'video/mr-sunshine.mp4', 'video/mp4')
-
-categoria_anime = Categoria(1, 'Animes', [video_streetfighter, video_naturo])
-categoria_filme_inter = Categoria(2, 'Filmes Internacionais', [video_mr_sunshine, video_desaf_gigantes])
-
-categorias = [categoria_anime, categoria_filme_inter]
+app = Flask(__name__, static_folder=os.path.abspath("application/view/static"), template_folder=os.path.abspath("application/view/templates"))
 
 @app.route("/")
 def home():
-    return render_template("home.html", categoria_list = categorias)
+    categoria_list = CategoriaDAO().find_all()
+    return render_template("home.html", categoria_list = categoria_list)
  
 @app.route("/video/<int:id>")
 def video(id: int):
-    for categoria in categorias:
-        for video in categoria.get_video_list():
-            if video.get_id() == id:
-                return render_template("video.html", video=video)
-    return render_template("video.html")
-
+    video = CategoriaDAO().find_video_by_id(id)
+    return render_template("video.html", video=video)
+    

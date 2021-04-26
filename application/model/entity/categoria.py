@@ -1,5 +1,5 @@
 from typing import List
-from video import Video
+from application.model.entity.video import Video
 
 class Categoria:
 
