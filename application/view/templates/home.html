@@ -14,6 +14,7 @@
             <section>
                 <h3>{{video.get_titulo()}}</h3>
                 <img class="video-banner" src="{{url_for('static', filename=video.get_imagem_path())}}" />
+                <a href="{{url_for('video', id=video.get_id())}}">Veja Mais</a>
             </section>
             {% endfor %}
         </section>
